@@ -12,6 +12,9 @@ module Cubestorm
     def run
       while continue_running? do
         timer.tick
+        parse_input
+        update_game
+        render
       end
     end
 

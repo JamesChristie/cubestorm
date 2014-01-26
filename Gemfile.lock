@@ -24,7 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  pry
-  rake
-  rspec
+  pry (= 0.9.12.4)
+  rake (= 10.1.1)
+  rspec (= 2.14.1)
   rubysdl (= 2.1.3.1)

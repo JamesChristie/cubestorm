@@ -1,34 +1,36 @@
-Gem::Specification.new do |s|
-  s.specification_version = 2 if s.respond_to? :specification_version=
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.rubygems_version = '2.1.10'
+Gem::Specification.new do |gem|
+  gem.specification_version = 2 if s.respond_to? :specification_version=
+  gem.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  gem.rubygems_version = '2.1.10'
 
-  s.name              = 'cubestorm'
-  s.version           = '1.0.0'
-  s.date              = '2014-01-21'
+  gem.name              = 'cubestorm'
+  gem.version           = '1.0.0'
+  gem.date              = '2014-01-21'
 
-  s.description   = %q{A simple rasterization demo in Ruby}
-  s.summary       = %q{A simple rasterization demo in Ruby}
+  gem.description   = %q{A simple rasterization demo in Ruby}
+  gem.summary       = %q{A simple rasterization demo in Ruby}
 
-  s.authors       = ["James Christie"]
-  s.email         = ["james.aaron.christie@gmail.com"]
-  s.homepage      = "https://github.com/acumenbrands/cubestorm"
+  gem.authors       = ["James Christie"]
+  gem.email         = ["james.aaron.christie@gmail.com"]
+  gem.homepage      = "https://github.com/acumenbrands/cubestorm"
 
-  s.require_paths = %w[lib]
+  gem.executables   = 'cubestorm'
 
-  s.extra_rdoc_files = %w[README.md]
+  gem.require_paths = %w[lib]
 
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec'
+  gem.extra_rdoc_files = %w[README.md]
+
+  gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec'
 
   ## Leave this section as-is. It will be automatically generated from the
   ## contents of your Git repository via the gemspec task. DO NOT REMOVE
   ## THE MANIFEST COMMENTS, they are used as delimiters by the task.
   # = MANIFEST =
-  s.files = %w[
+  gem.files = %w[
   ]
   # = MANIFEST =
 
-  s.test_files = s.files.grep(%r{^spec/})
+  gem.test_files = s.files.grep(%r{^spec/})
 end

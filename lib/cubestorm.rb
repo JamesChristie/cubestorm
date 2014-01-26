@@ -8,16 +8,20 @@ require_relative File.join('cubestorm', 'config', 'options')
 require_relative File.join('cubestorm', 'config')
 require_relative File.join('cubestorm', 'config', 'option_definitions')
 
-require_relative File.join('cubestorm', 'geometry', 'node')
+require_relative File.join('cubestorm', 'environment')
+require_relative File.join('cubestorm', 'game')
+require_relative File.join('cubestorm', 'viewport')
+require_relative File.join('cubestorm', 'world')
+
+require_relative File.join('cubestorm', 'position')
+require_relative File.join('cubestorm', 'position', 'helpers')
+
+require_relative File.join('cubestorm', 'geometry', 'vertex')
 require_relative File.join('cubestorm', 'geometry', 'edge')
 require_relative File.join('cubestorm', 'geometry', 'mesh')
 
 require_relative File.join('cubestorm', 'render', 'orthogonal')
 require_relative File.join('cubestorm', 'render', 'perspective')
-
-require_relative File.join('cubestorm', 'game')
-require_relative File.join('cubestorm', 'viewport')
-require_relative File.join('cubestorm', 'world')
 
 require_relative File.join('cubestorm', 'entity')
 require_relative File.join('cubestorm', 'entity', 'cube')
@@ -31,13 +35,7 @@ module Cubestorm
 
   def execute(args)
     option_parser(args).parse!
-    # TODO (jameschristie) Invoke game loop
-    # The loop should be based on a singleton exit flag
-    # as well as a fatal flag. In the event of a fatal
-    # error, the exit flag is set and the fatal error
-    # is dumped as the last action prior to exiting
-    Viewport.create
-    sleep(5)
+    Game.run
   end
 
   def config(&block)
@@ -58,6 +56,10 @@ module Cubestorm
 
       parser.on("-c", "--cube-count COUNT", "Number of cubes to render") do |count|
         Config.cube_count = count.to_i
+      end
+
+      parser.on("-F", "--frame-limit LIMIT", "Upper limit of FPS for the game loop") do |limit|
+        Config.frame_limit = limit.to_i
       end
 
       parser.on("-x", "--x-resolution RESOLUTION", "Use custom x resolution") do |res|
@@ -84,13 +86,14 @@ module Cubestorm
         Config.verbose = true
       end
 
+      parser.on("-V", "--version", "Output version number") do
+        puts VERSION
+        Environment.request_shutdown
+      end
+
       parser.on("-h", "--help", "Display this help text") do
-        # NOTE (jameschristie) Very poor control flow, this should
-        # be replaced with setting the singleton exit signal to true
-        # so that the normal loop exits the application prior to even
-        # booting a game instance
         puts parser
-        exit
+        Environment.request_shutdown
       end
     end
   end

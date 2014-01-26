@@ -12,4 +12,6 @@ module Cubestorm
 
   Config.option :cube_count, default: 5
 
+  Config.option :frame_limit, default: 60
+
 end

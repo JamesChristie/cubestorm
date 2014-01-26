@@ -1,4 +1,6 @@
+require 'logger'
 require 'optparse'
+
 require 'sdl'
 
 require_relative File.join('cubestorm', 'errors', 'cubefault')
@@ -8,10 +10,12 @@ require_relative File.join('cubestorm', 'config', 'options')
 require_relative File.join('cubestorm', 'config')
 require_relative File.join('cubestorm', 'config', 'option_definitions')
 
+require_relative File.join('cubestorm', 'logger')
 require_relative File.join('cubestorm', 'environment')
-require_relative File.join('cubestorm', 'game')
 require_relative File.join('cubestorm', 'viewport')
 require_relative File.join('cubestorm', 'world')
+require_relative File.join('cubestorm', 'timer')
+require_relative File.join('cubestorm', 'game')
 
 require_relative File.join('cubestorm', 'position')
 require_relative File.join('cubestorm', 'position', 'helpers')
@@ -35,7 +39,13 @@ module Cubestorm
 
   def execute(args)
     option_parser(args).parse!
-    Game.run
+    exit if Environment.shutdown?
+
+    Logger.info("test")
+    Game.new.tap do |game|
+      game.run
+      game.cleanup
+    end
   end
 
   def config(&block)

@@ -27,7 +27,8 @@ module Cubestorm
 
         class_eval <<-RUBY
           def #{name}
-            settings[#{name.inspect}] || raise_not_configured(#{name.inspect})
+           raise_not_configured(#{name.inspect}) if settings[#{name.inspect}].nil?
+           settings[#{name.inspect}]
           end
 
           def #{name}=(value)
@@ -36,6 +37,14 @@ module Cubestorm
 
           def #{name}?
             !!settings[#{name.inspect}]
+          end
+
+          def default_#{name}!
+            settings[#{name.inspect}] = defaults[#{name.inspect}]
+          end
+
+          def #{name}_default_value
+            defaults[#{name.inspect}]
           end
         RUBY
       end

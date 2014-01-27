@@ -48,6 +48,11 @@ module Cubestorm
           Config.verbose = true
         end
 
+        parser.on("-d", "--debug", "Output remarkably verbose debug information") do
+          Config.verbose = true
+          Config.debug   = true
+        end
+
         parser.on("-l", "--logfile FILENAME", "Name of the log file to use") do
           Config.verbose = true
         end

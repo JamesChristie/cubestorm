@@ -56,7 +56,6 @@ module Cubestorm
         passed += self.class.wait(extra)
       end
 
-      puts "ticked #{passed}"
       passed
     ensure
       @last_tick  = SDL.getTicks

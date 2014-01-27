@@ -10,9 +10,11 @@ require_relative File.join('cubestorm', 'config', 'options')
 require_relative File.join('cubestorm', 'config')
 require_relative File.join('cubestorm', 'config', 'option_definitions')
 
-require_relative File.join('cubestorm', 'logger')
 require_relative File.join('cubestorm', 'environment')
+require_relative File.join('cubestorm', 'environment', 'event')
+
 require_relative File.join('cubestorm', 'viewport')
+require_relative File.join('cubestorm', 'input')
 require_relative File.join('cubestorm', 'world')
 require_relative File.join('cubestorm', 'timer')
 require_relative File.join('cubestorm', 'game')
@@ -24,14 +26,16 @@ require_relative File.join('cubestorm', 'geometry', 'vertex')
 require_relative File.join('cubestorm', 'geometry', 'edge')
 require_relative File.join('cubestorm', 'geometry', 'mesh')
 
-require_relative File.join('cubestorm', 'render', 'orthogonal')
-require_relative File.join('cubestorm', 'render', 'perspective')
+require_relative File.join('cubestorm', 'renderer')
+require_relative File.join('cubestorm', 'renderer', 'orthogonal')
+require_relative File.join('cubestorm', 'renderer', 'perspective')
 
 require_relative File.join('cubestorm', 'entity')
 require_relative File.join('cubestorm', 'entity', 'cube')
 require_relative File.join('cubestorm', 'entity', 'camera')
 
 require_relative File.join('cubestorm', 'command_line')
+require_relative File.join('cubestorm', 'logger')
 
 require_relative File.join('cubestorm', 'version')
 

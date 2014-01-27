@@ -2,26 +2,28 @@ module Cubestorm
 
   class Game
 
-    attr_reader :viewport, :timer
+    attr_reader :screen, :timer
 
     def initialize
-      @viewport = Viewport.create
-      @timer    = Timer.new
+      @screen = Viewport.create
+      @timer  = Timer.new
+
+      @renderer = selected_renderer
     end
 
     def run
       while continue_running? do
-        timer.tick
-        parse_input
-        update_game
-        render
+        step
       end
     end
 
+    def cleanup
+    end
+
     def step
-      parse_input
-      update_game
-      render
+      Input.parse
+      Environment.process_events
+      @renderer.update(screen)
     end
 
     private
@@ -32,8 +34,8 @@ module Cubestorm
     def render
     end
 
-    def renderer
-      Config.orthogonal? ? Orthogonal : Perspective
+    def selected_renderer
+      Config.orthogonal? ? Renderer::Orthogonal.new : Renderer::Perspective.new
     end
 
     def continue_running?

@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.authors       = ["James Christie"]
   gem.email         = ["james.aaron.christie@gmail.com"]
-  gem.homepage      = "https://github.com/acumenbrands/cubestorm"
+  gem.homepage      = "https://github.com/JamesChristie/cubestorm"
 
   gem.executables   = 'cubestorm'
 

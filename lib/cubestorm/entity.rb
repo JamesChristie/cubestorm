@@ -2,13 +2,27 @@ module Cubestorm
 
   class Entity
 
-    include Position::Helpers
+    attr_reader :position
 
-    attr_reader :name, :mesh, :position
+    def initialize(position=Position.new)
+      @position = position
+    end
 
-    def initialize(name, mesh)
-      @name = name
-      @mesh = mesh
+    def points
+      @points ||= []
+    end
+
+    def edges
+      @edges ||= []
+    end
+
+    def transformed_edge_set(transformation)
+      edges.map do |edge|
+        Edge.new(
+          Point.from_matrix(edge.start.vector * transformation),
+          Point.from_matrix(edge.terminus.vector * transformation)
+        )
+      end
     end
 
   end

@@ -1,5 +1,6 @@
 require 'logger'
 require 'optparse'
+require 'matrix'
 
 require 'sdl'
 
@@ -10,27 +11,17 @@ require_relative File.join('cubestorm', 'config', 'options')
 require_relative File.join('cubestorm', 'config')
 require_relative File.join('cubestorm', 'config', 'option_definitions')
 
-require_relative File.join('cubestorm', 'environment')
-require_relative File.join('cubestorm', 'environment', 'event')
-
-require_relative File.join('cubestorm', 'viewport')
-require_relative File.join('cubestorm', 'input')
-require_relative File.join('cubestorm', 'world')
 require_relative File.join('cubestorm', 'timer')
 require_relative File.join('cubestorm', 'game')
-
-require_relative File.join('cubestorm', 'position')
-require_relative File.join('cubestorm', 'position', 'helpers')
-
-require_relative File.join('cubestorm', 'geometry', 'vertex')
-require_relative File.join('cubestorm', 'geometry', 'edge')
-require_relative File.join('cubestorm', 'geometry', 'mesh')
-
+require_relative File.join('cubestorm', 'engine')
+require_relative File.join('cubestorm', 'transformation')
 require_relative File.join('cubestorm', 'renderer')
-require_relative File.join('cubestorm', 'renderer', 'orthogonal')
-require_relative File.join('cubestorm', 'renderer', 'perspective')
+
 
 require_relative File.join('cubestorm', 'entity')
+require_relative File.join('cubestorm', 'entity', 'point')
+require_relative File.join('cubestorm', 'entity', 'position')
+require_relative File.join('cubestorm', 'entity', 'edge')
 require_relative File.join('cubestorm', 'entity', 'cube')
 require_relative File.join('cubestorm', 'entity', 'camera')
 
@@ -43,11 +34,16 @@ module Cubestorm
 
   extend self
 
+  TITLE     = 'Cubestorm'
+  CUBE_ROOT = File.join(File.expand_path(File.dirname(__FILE__)), '..')
+
   def execute(args)
     CommandLine.parse(args)
-    exit if Environment.shutdown?
+    exit if shutdown?
 
-    Game.new.tap do |game|
+    init_systems
+
+    Engine.new.tap do |game|
       game.run
       game.cleanup
     end
@@ -55,6 +51,21 @@ module Cubestorm
 
   def config(&block)
     block_given? ? yield(Config) : Config
+  end
+
+  def request_halt
+    @shutdown = true
+  end
+
+  def shutdown?
+    @shutdown ||= false
+  end
+
+  private
+
+  def init_systems
+    SDL.init(SDL::INIT_VIDEO)
+    SDL::TTF.init
   end
 
 end

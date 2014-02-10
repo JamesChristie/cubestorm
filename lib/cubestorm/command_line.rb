@@ -40,7 +40,7 @@ module Cubestorm
           Config.fullscreen = true
         end
 
-        parser.on("-o", "--orthogonal", "Use orthogonal renderer instead of perspective") do
+        parser.on("-o", "--orthographic", "Use orthographic renderer instead of perspective") do
           Config.orthogonal = true
         end
 
@@ -59,12 +59,12 @@ module Cubestorm
 
         parser.on("-V", "--version", "Output version number") do
           puts VERSION
-          Environment.request_shutdown
+          ::Cubestorm.request_halt
         end
 
         parser.on("-h", "--help", "Display this help text") do
           puts parser
-          Environment.request_shutdown
+          ::Cubestorm.request_halt
         end
 
         parser.separator ""

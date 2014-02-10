@@ -1,45 +1,38 @@
 module Cubestorm
 
-  class Game
+  module Game
 
-    attr_reader :screen, :timer
-
-    def initialize
-      @screen = Viewport.create
-      @timer  = Timer.new
-
-      @renderer = selected_renderer
-    end
-
-    def run
-      while continue_running? do
-        step
-      end
-    end
-
-    def cleanup
-    end
-
-    def step
-      Input.parse
-      Environment.process_events
-      @renderer.update(screen)
+    def update
+      ::Cubestorm.request_halt if quit_key?
+      update_cubes
+      update_camera
     end
 
     private
 
-    def update
+    def initial_entities
+      [Entity::Cube.new(Entity::Position.new(0, 0, 0, 0, 0, 0, 50))]
+      # Config.cube_count.times.map do |point|
+      #   Entity::Cube.new(Entity::Position.new(0, 0, 0, 0, 0, 0, 30))
+      # end
     end
 
-    def render
+    def update_cubes
     end
 
-    def selected_renderer
-      Config.orthogonal? ? Renderer::Orthogonal.new : Renderer::Perspective.new
+    def update_camera
     end
 
-    def continue_running?
-      !Environment.shutdown?
+    def quit_key?
+      SDL::Key.press?(Config.quit_key)
+    end
+
+    def accelerate_key?
+      SDL::Key.press?(Config.accelerate_key)
+    end
+
+    def decelerate_key?
+      SDL::Key.press?(Config.decelerate_key)
     end
 
   end
